@@ -1,44 +1,26 @@
-package com.b127.mm.entity;
+package com.b127.mm.dto;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import com.b127.mm.entity.DeliveryType;
 
-@Entity
-@Table(name = "deliveries")
-public class Delivery {
+public class DeliveryDto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "order_id", referencedColumnName = "id")
-	private Order order;
-
+	private Long orderId;
 	private double deliveryCost;
 	private String currencyType;
 	private String destinationAddress;
-
 	private DeliveryType deliveryType;
-
 	private boolean isDeliveryComplete;
 
-	public Delivery() {
+	public DeliveryDto() {
 
 	}
 
-	public Delivery(Long id, Order order, double deliveryCost, String currencyType, String destinationAddress,
+	public DeliveryDto(Long id, Long orderId, double deliveryCost, String currencyType, String destinationAddress,
 			DeliveryType deliveryType, boolean isDeliveryComplete) {
 		super();
 		this.id = id;
-		this.order = order;
+		this.orderId = orderId;
 		this.deliveryCost = deliveryCost;
 		this.currencyType = currencyType;
 		this.destinationAddress = destinationAddress;
@@ -54,12 +36,12 @@ public class Delivery {
 		this.id = id;
 	}
 
-	public Order getOrder() {
-		return order;
+	public Long getOrderId() {
+		return orderId;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 
 	public double getDeliveryCost() {

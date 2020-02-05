@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.b127.mm.dto.StockDto;
 import com.b127.mm.entity.Stock;
 import com.b127.mm.service.StockService;
 
@@ -26,22 +27,22 @@ public class StockController {
 	private StockService stockService;
 	
 	@GetMapping
-	public List<Stock> getSellerProductStocks(@PathVariable Long sellerId){
+	public List<StockDto> getSellerProductStocks(@PathVariable Long sellerId){
 		return stockService.getSellerProductStocks(sellerId);
 	}
 	
 	@GetMapping("/{productId}")
-	public Stock getProductStock(@PathVariable Long productId) {
+	public StockDto getProductStock(@PathVariable Long productId) {
 		return stockService.getProductStock(productId);
 	}
 	
 	@PostMapping("/{productId}")
-	public Stock addProductStock(@RequestBody Stock stock, @PathVariable Long productId) {
+	public StockDto addProductStock(@RequestBody Stock stock, @PathVariable Long productId) {
 		return stockService.addProductStock(stock, productId);
 	}
 	
 	@PutMapping("/{productId}")
-	public Stock updateProductStock(@RequestBody Stock stock, @PathVariable Long productId) {
+	public StockDto updateProductStock(@RequestBody Stock stock, @PathVariable Long productId) {
 		return stockService.addProductStock(stock, productId);
 	}
 	

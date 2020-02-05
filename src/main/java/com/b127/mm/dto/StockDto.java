@@ -1,40 +1,32 @@
-package com.b127.mm.entity;
+package com.b127.mm.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import com.b127.mm.entity.Product;
+import com.b127.mm.entity.StockType;
 
-@Entity
-@Table(name = "stocks")
-public class Stock {
+public class StockDto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@OneToOne(mappedBy = "stock")
-	private Product product;
+	private String productName;
 	private StockType stockType;
 	private double maximumQuantity;
 	private double availableQuantity;
 	private boolean isAvailableOnSell;
+	private double unitPrice;
 
-	public Stock() {
+	public StockDto() {
 
 	}
 
-	public Stock(Long id, Product product, StockType stockType, double maximumQuantity, double availableQuantity,
-			boolean isAvailableOnSell) {
+	public StockDto(Long id, String productName, StockType stockType, double maximumQuantity, double availableQuantity,
+			boolean isAvailableOnSell, double unitPrice) {
 		super();
 		this.id = id;
-		this.product = product;
+		this.productName = productName;
 		this.stockType = stockType;
 		this.maximumQuantity = maximumQuantity;
 		this.availableQuantity = availableQuantity;
 		this.isAvailableOnSell = isAvailableOnSell;
+		this.unitPrice = unitPrice;
 	}
 
 	public Long getId() {
@@ -45,12 +37,12 @@ public class Stock {
 		this.id = id;
 	}
 
-	public Product getProduct() {
-		return product;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public StockType getStockType() {
@@ -83,6 +75,14 @@ public class Stock {
 
 	public void setAvailableOnSell(boolean isAvailableOnSell) {
 		this.isAvailableOnSell = isAvailableOnSell;
+	}
+	
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	
+	public double getUnitPrice() {
+		return unitPrice;
 	}
 
 }

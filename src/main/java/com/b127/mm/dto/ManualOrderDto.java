@@ -1,61 +1,34 @@
-package com.b127.mm.entity;
+package com.b127.mm.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.b127.mm.entity.OrderStatus;
 
-@Entity
-@Table(name = "orders")
-public class Order {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ManualOrderDto {
 	private Long id;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "seller_id", referencedColumnName = "id")
-	private User seller;
-
-	@OneToMany(mappedBy = "order")
-	private List<OrderedProducts> orderProducts;
-
-	private double productAmount;
-
 	private LocalDate orderExpirationDate;
 	private LocalDate orderStartDate;
 	private LocalTime orderStartTime;
-
 	private double totalPrice;
 	private String currencyType;
 	private OrderStatus orderStatus;
 	private String orderLocation;
 	private boolean sellerConfirmation;
 	private boolean buyerConfirmation;
+	private List<ManualOrderProductDto> orderedProducts;
+	private int noOfProducts;
 
-	public Order() {
+	public ManualOrderDto() {
 
 	}
 
-	public Order(Long id, User seller, List<OrderedProducts> orderProducts, double productAmount,
-			LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime, double totalPrice,
-			String currencyType, OrderStatus orderStatus, String orderLocation, boolean sellerConfirmation,
-			boolean buyerConfirmation) {
+	public ManualOrderDto(Long id, LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime,
+			double totalPrice, String currencyType, OrderStatus orderStatus, String orderLocation,
+			boolean sellerConfirmation, boolean buyerConfirmation, List<ManualOrderProductDto> orderedProducts) {
 		super();
 		this.id = id;
-		this.seller = seller;
-		this.orderProducts = orderProducts;
-		this.productAmount = productAmount;
 		this.orderExpirationDate = orderExpirationDate;
 		this.orderStartDate = orderStartDate;
 		this.orderStartTime = orderStartTime;
@@ -65,6 +38,28 @@ public class Order {
 		this.orderLocation = orderLocation;
 		this.sellerConfirmation = sellerConfirmation;
 		this.buyerConfirmation = buyerConfirmation;
+		this.orderedProducts = orderedProducts;
+	}
+	
+	
+
+	public ManualOrderDto(Long id, LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime,
+			double totalPrice, String currencyType, OrderStatus orderStatus, String orderLocation,
+			boolean sellerConfirmation, boolean buyerConfirmation, List<ManualOrderProductDto> orderedProducts,
+			int noOfProducts) {
+		super();
+		this.id = id;
+		this.orderExpirationDate = orderExpirationDate;
+		this.orderStartDate = orderStartDate;
+		this.orderStartTime = orderStartTime;
+		this.totalPrice = totalPrice;
+		this.currencyType = currencyType;
+		this.orderStatus = orderStatus;
+		this.orderLocation = orderLocation;
+		this.sellerConfirmation = sellerConfirmation;
+		this.buyerConfirmation = buyerConfirmation;
+		this.orderedProducts = orderedProducts;
+		this.noOfProducts = noOfProducts;
 	}
 
 	public Long getId() {
@@ -73,22 +68,6 @@ public class Order {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public User getSeller() {
-		return seller;
-	}
-
-	public void setSeller(User seller) {
-		this.seller = seller;
-	}
-
-	public double getProductAmount() {
-		return productAmount;
-	}
-
-	public void setProductAmount(double productAmount) {
-		this.productAmount = productAmount;
 	}
 
 	public LocalDate getOrderExpirationDate() {
@@ -147,14 +126,6 @@ public class Order {
 		this.orderLocation = orderLocation;
 	}
 
-	public void setOrderProducts(List<OrderedProducts> orderProducts) {
-		this.orderProducts = orderProducts;
-	}
-
-	public List<OrderedProducts> getOrderProducts() {
-		return orderProducts;
-	}
-
 	public boolean getSellerConfirmation() {
 		return sellerConfirmation;
 	}
@@ -169,6 +140,22 @@ public class Order {
 
 	public void setBuyerConfirmation(boolean buyerConfirmation) {
 		this.buyerConfirmation = buyerConfirmation;
+	}
+
+	public List<ManualOrderProductDto> getOrderedProducts() {
+		return orderedProducts;
+	}
+
+	public void setOrderedProducts(List<ManualOrderProductDto> orderedProducts) {
+		this.orderedProducts = orderedProducts;
+	}
+	
+	public int getNoOfProducts() {
+		return noOfProducts;
+	}
+	
+	public void setNoOfProducts(int noOfProducts) {
+		this.noOfProducts = noOfProducts;
 	}
 
 }

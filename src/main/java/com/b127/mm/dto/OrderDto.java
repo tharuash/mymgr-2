@@ -1,41 +1,20 @@
-package com.b127.mm.entity;
+package com.b127.mm.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.b127.mm.entity.OrderStatus;
+import com.b127.mm.entity.OrderedProducts;
 
-@Entity
-@Table(name = "orders")
-public class Order {
+public class OrderDto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "seller_id", referencedColumnName = "id")
-	private User seller;
-
-	@OneToMany(mappedBy = "order")
 	private List<OrderedProducts> orderProducts;
-
 	private double productAmount;
-
 	private LocalDate orderExpirationDate;
 	private LocalDate orderStartDate;
 	private LocalTime orderStartTime;
-
 	private double totalPrice;
 	private String currencyType;
 	private OrderStatus orderStatus;
@@ -43,17 +22,16 @@ public class Order {
 	private boolean sellerConfirmation;
 	private boolean buyerConfirmation;
 
-	public Order() {
+	public OrderDto() {
 
 	}
 
-	public Order(Long id, User seller, List<OrderedProducts> orderProducts, double productAmount,
-			LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime, double totalPrice,
-			String currencyType, OrderStatus orderStatus, String orderLocation, boolean sellerConfirmation,
+	public OrderDto(Long id, List<OrderedProducts> orderProducts, double productAmount, LocalDate orderExpirationDate,
+			LocalDate orderStartDate, LocalTime orderStartTime, double totalPrice, String currencyType,
+			OrderStatus orderStatus, String orderLocation, boolean sellerConfirmation,
 			boolean buyerConfirmation) {
 		super();
 		this.id = id;
-		this.seller = seller;
 		this.orderProducts = orderProducts;
 		this.productAmount = productAmount;
 		this.orderExpirationDate = orderExpirationDate;
@@ -75,12 +53,12 @@ public class Order {
 		this.id = id;
 	}
 
-	public User getSeller() {
-		return seller;
+	public List<OrderedProducts> getOrderProducts() {
+		return orderProducts;
 	}
 
-	public void setSeller(User seller) {
-		this.seller = seller;
+	public void setOrderProducts(List<OrderedProducts> orderProducts) {
+		this.orderProducts = orderProducts;
 	}
 
 	public double getProductAmount() {
@@ -146,15 +124,7 @@ public class Order {
 	public void setOrderLocation(String orderLocation) {
 		this.orderLocation = orderLocation;
 	}
-
-	public void setOrderProducts(List<OrderedProducts> orderProducts) {
-		this.orderProducts = orderProducts;
-	}
-
-	public List<OrderedProducts> getOrderProducts() {
-		return orderProducts;
-	}
-
+	
 	public boolean getSellerConfirmation() {
 		return sellerConfirmation;
 	}

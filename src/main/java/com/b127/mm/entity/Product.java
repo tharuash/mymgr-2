@@ -1,14 +1,21 @@
 package com.b127.mm.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "products")
@@ -27,9 +34,17 @@ public class Product {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "seller_id", referencedColumnName = "id")
 	private User user;
-
-	@OneToOne(mappedBy = "product")
+	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "stock_id", referencedColumnName = "id")
 	private Stock stock;
+	
+	@OneToMany(mappedBy = "product")
+	private List<OrderedProducts> productOrders;
+	
+	/*@Lob
+	@Type(type = "org.hibernate.type.ImageType")
+	private String image;*/
 
 	public Product() {
 
@@ -47,6 +62,7 @@ public class Product {
 		this.siUnit = siUnit;
 		this.user = user;
 		this.stock = stock;
+		// this.image = image;
 	}
 
 	public Long getId() {
@@ -120,5 +136,13 @@ public class Product {
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
+	
+	/*public void setImage(String image) {
+		this.image = image;
+	}
+	
+	public String getImage() {
+		return image;
+	}*/
 
 }

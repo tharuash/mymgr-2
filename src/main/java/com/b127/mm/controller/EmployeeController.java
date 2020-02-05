@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.b127.mm.dto.EmployeeDto;
 import com.b127.mm.entity.Employee;
 import com.b127.mm.service.EmployeeService;
 
@@ -29,8 +30,13 @@ public class EmployeeController {
 		return employeeService.getSellerEmployees(sellerId);
 	}
 	
-	@GetMapping("/{employeeId}")
+	/*@GetMapping("/{employeeId}")
 	public Employee getSingleEmployee(@PathVariable Long employeeId) {
+		return employeeService.getEmployee(employeeId);
+	}*/
+	
+	@GetMapping("/{employeeId}")
+	public EmployeeDto getSingleEmployee(@PathVariable Long employeeId) {
 		return employeeService.getEmployee(employeeId);
 	}
 	

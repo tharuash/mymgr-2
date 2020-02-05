@@ -1,10 +1,12 @@
 package com.b127.mm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.b127.mm.dto.StockDto;
 import com.b127.mm.entity.Product;
 import com.b127.mm.entity.Stock;
 import com.b127.mm.entity.User;
@@ -26,23 +28,35 @@ public class StockServiceImpl implements StockService {
 	private StockRepository stockRepository;
 
 	@Override
-	public List<Stock> getSellerProductStocks(Long sellerId) {
+	public List<StockDto> getSellerProductStocks(Long sellerId) {
 		User currentSeller = userRepository.findById(sellerId).get();
 		List<Product> sellerProducts = productRepository.findByUser(currentSeller);
-		return stockRepository.findByProductIn(sellerProducts);
+		List<Stock> sellerStocks = stockRepository.findByProductIn(sellerProducts);
+		List<StockDto> stockDtos = new ArrayList<StockDto>();
+		for (Stock s : sellerStocks) {
+			stockDtos.add(new StockDto(s.getId(), s.getProduct().getName(), s.getStockType(), s.getMaximumQuantity(),
+					s.getAvailableQuantity(), s.isAvailableOnSell(), s.getProduct().getUnitPrice()));
+		}
+		return stockDtos;
 	}
 
 	@Override
-	public Stock getProductStock(Long productId) {
+	public StockDto getProductStock(Long productId) {
 		Product selectedProduct = productRepository.findById(productId).get();
-		return stockRepository.findByProduct(selectedProduct);
+		Stock s = stockRepository.findByProduct(selectedProduct);
+		
+		return new StockDto(s.getId(), s.getProduct().getName(), s.getStockType(), s.getMaximumQuantity(),
+				s.getAvailableQuantity(), s.isAvailableOnSell(), 0.0);
 	}
 
 	@Override
-	public Stock addProductStock(Stock stock, Long productId) {
+	public StockDto addProductStock(Stock stock, Long productId) {
 		Product selectedProduct = productRepository.findById(productId).get();
 		stock.setProduct(selectedProduct);
-		return stockRepository.save(stock);
+		Stock s = stockRepository.save(stock);
+		
+		return new StockDto(s.getId(), s.getProduct().getName(), s.getStockType(), s.getMaximumQuantity(),
+				s.getAvailableQuantity(), s.isAvailableOnSell(), 0.0);
 	}
 
 	@Override

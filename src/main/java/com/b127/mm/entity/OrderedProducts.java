@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class OrderedProducts {
 
@@ -18,7 +20,7 @@ public class OrderedProducts {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id", referencedColumnName = "id")
 	private Order order;
-
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private Product product;

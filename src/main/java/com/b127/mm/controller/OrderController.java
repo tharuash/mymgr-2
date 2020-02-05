@@ -14,25 +14,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.b127.mm.dto.ManualOrderDto;
+import com.b127.mm.dto.OrderDto;
 import com.b127.mm.dto.TransactionDto;
 import com.b127.mm.entity.Transaction;
+import com.b127.mm.service.OrderService;
 import com.b127.mm.service.TransactionService;
-
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/api/employees/transactions/{sellerId}")
-public class TransactionController {
+@RequestMapping(value = "/api/orders/{sellerId}")
+public class OrderController {
 	
 	@Autowired
-	private TransactionService transactionService;
+	private OrderService orderService;
+	
+	/*@GetMapping
+	public List<OrderDto> getSellerOrders(@PathVariable Long sellerId){
+		return orderService.getSellerOrders(sellerId);
+	}*/
 	
 	@GetMapping
-	public List<Transaction> getSellerTransactions(@PathVariable Long sellerId){
-		return transactionService.getSellerTransactions(sellerId);
+	public List<ManualOrderDto> getSellerOrders(@PathVariable Long sellerId){
+		return orderService.getSellerOrders(sellerId);
 	}
 	
-	@GetMapping("/{employeeId}")
+	@GetMapping("/{orderId}")
+	public ManualOrderDto getSellerOrder(@PathVariable Long orderId){
+		return orderService.getSellerOrder(orderId);
+	}
+	
+	
+	
+	/*@GetMapping("/{employeeId}")
 	public List<Transaction> getEmployeeTransactions(@PathVariable Long employeeId) {
 		return transactionService.getEmployeeTransactions(employeeId);
 	}
@@ -40,19 +54,24 @@ public class TransactionController {
 	/*@GetMapping("/{employeeId}/{transactionId}")
 	public Transaction getTransactions(@PathVariable Long transactionId) {
 		return transactionService.getTransaction(transactionId);
-	}*/
+	}
 	
 	@GetMapping("/{employeeId}/{transactionId}")
 	public TransactionDto getTransactions(@PathVariable Long transactionId) {
 		return transactionService.getTransaction(transactionId);
+	}*/
+	
+	@PostMapping
+	public ManualOrderDto addManualOrder(@RequestBody ManualOrderDto manualOrderDto , @PathVariable Long sellerId) {
+		return orderService.addManualOrder(manualOrderDto, sellerId);
+	}
+	
+	@PutMapping
+	public ManualOrderDto updateManualOrder(@RequestBody ManualOrderDto manualOrderDto , @PathVariable Long sellerId) {
+		return orderService.addManualOrder(manualOrderDto, sellerId);
 	}
 	
 	/*@PostMapping("/{employeeId}")
-	public Transaction addTransaction(@RequestBody Transaction transaction, @PathVariable Long employeeId) {
-		return transactionService.addTransaction(transaction, employeeId);
-	}*/
-	
-	@PostMapping("/{employeeId}")
 	public TransactionDto addTransaction(@RequestBody Transaction transaction, @PathVariable Long employeeId) {
 		return transactionService.addTransaction(transaction, employeeId);
 	}
@@ -66,6 +85,6 @@ public class TransactionController {
 	public ResponseEntity<?> deleteTransaction(@PathVariable Long transactionId){
 		transactionService.deleteTransaction(transactionId);
 		return ResponseEntity.ok().build();
-	}
+	}*/
 
 }
