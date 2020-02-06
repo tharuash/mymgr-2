@@ -29,9 +29,16 @@ public class StockServiceImpl implements StockService {
 
 	@Override
 	public List<StockDto> getSellerProductStocks(Long sellerId) {
+		
 		User currentSeller = userRepository.findById(sellerId).get();
 		List<Product> sellerProducts = productRepository.findByUser(currentSeller);
-		List<Stock> sellerStocks = stockRepository.findByProductIn(sellerProducts);
+		System.out.println("method occures");
+		List<Stock> sellerStocks = new ArrayList<>();
+		
+		for (Product p : sellerProducts) {
+			sellerStocks.add(p.getStock());
+		}
+		
 		List<StockDto> stockDtos = new ArrayList<StockDto>();
 		for (Stock s : sellerStocks) {
 			stockDtos.add(new StockDto(s.getId(), s.getProduct().getName(), s.getStockType(), s.getMaximumQuantity(),

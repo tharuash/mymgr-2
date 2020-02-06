@@ -9,7 +9,7 @@ public interface TransactionService {
 	
 	List<Transaction> getSellerTransactions(Long sellerId);
 	
-	List<Transaction> getEmployeeTransactions(Long employeeId);
+	List<TransactionDto> getEmployeeTransactions(Long employeeId);
 	
 	// Transaction getTransaction(Long transactionId);
 	

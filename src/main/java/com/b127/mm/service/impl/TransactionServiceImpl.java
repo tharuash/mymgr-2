@@ -1,5 +1,6 @@
 package com.b127.mm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,16 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public List<Transaction> getEmployeeTransactions(Long employeeId) {
+	public List<TransactionDto> getEmployeeTransactions(Long employeeId) {
 		Employee sellectedEmployee = employeeRepository.findById(employeeId).get();
-		return transactionRepository.findByEmployee(sellectedEmployee);
+		List<Transaction> employeeTransactions = transactionRepository.findByEmployee(sellectedEmployee);
+		List<TransactionDto> transactionDtos = new ArrayList<TransactionDto>(); 
+		for(Transaction t : employeeTransactions) {
+			transactionDtos.add(new TransactionDto(t.getId(), new EmployeeDto(t.getEmployee().getId(), t.getEmployee().getName(), "", "", "", "", "", null, null, 0), t.getTransactionType(),
+				t.getTransactionDate(), t.getTransactionTime(),
+				t.getAmount(), t.getDescription()));
+		}
+		return transactionDtos;
 	}
 
 	/*@Override

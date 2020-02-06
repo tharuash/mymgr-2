@@ -33,7 +33,7 @@ public class TransactionController {
 	}
 	
 	@GetMapping("/{employeeId}")
-	public List<Transaction> getEmployeeTransactions(@PathVariable Long employeeId) {
+	public List<TransactionDto> getEmployeeTransactions(@PathVariable Long employeeId) {
 		return transactionService.getEmployeeTransactions(employeeId);
 	}
 	

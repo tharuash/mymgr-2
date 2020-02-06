@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.b127.mm.dto.OrderDto;
 import com.b127.mm.dto.ProductDto;
 import com.b127.mm.dto.ProductOrderDto;
+import com.b127.mm.dto.StockDto;
+import com.b127.mm.dto.UserDto;
 import com.b127.mm.entity.Order;
 import com.b127.mm.entity.OrderedProducts;
 import com.b127.mm.entity.Product;
@@ -106,6 +108,31 @@ public class ProductServiceImpl implements ProductService {
 					p.getUnitQuantity(), p.getSiUnit(), null));
 		}
 		return productDtos;
+	}
+
+	@Override
+	public List<ProductDto> getProducts() {
+		List<Product> products = productRepository.findAll();
+		List<ProductDto> productDtos = new ArrayList<ProductDto>();
+
+		for (Product p : products) {
+			StockDto stock = new StockDto(p.getStock().getId(), p.getName(), p.getStock().getStockType(), p.getStock().getMaximumQuantity(), p.getStock().getAvailableQuantity(), p.getStock().isAvailableOnSell(), p.getUnitPrice()); 
+			productDtos.add(new ProductDto(p.getId(), p.getName(), p.getType(), p.getUnitPrice(), p.getCurrencyType(),
+					p.getUnitQuantity(), p.getSiUnit(), null, stock));
+		}
+		return productDtos;
+	}
+	
+	@Override
+	public ProductDto getProduct(Long productId) {
+		Product p = productRepository.findById(productId).get();
+		User seller = userRepository.findById(p.getUser().getId()).get();
+		StockDto stock = new StockDto(p.getStock().getId(), p.getName(), p.getStock().getStockType(), p.getStock().getMaximumQuantity(), p.getStock().getAvailableQuantity(), p.getStock().isAvailableOnSell(), p.getUnitPrice()); 
+		UserDto sellerDto = new UserDto(seller.getId(), seller.getFirstname(), seller.getLastname(), seller.getEmail(), seller.getMobile(), seller.getBuisnessName());
+		ProductDto pd = new ProductDto(p.getId(), p.getName(), p.getType(), p.getUnitPrice(), p.getCurrencyType(),
+					p.getUnitQuantity(), p.getSiUnit(), null, stock, sellerDto);
+		
+		return pd;
 	}
 
 	/*

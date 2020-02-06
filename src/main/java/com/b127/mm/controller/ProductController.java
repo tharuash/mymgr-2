@@ -24,23 +24,28 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/api/products/{sellerId}")
+@RequestMapping(value = "/api/products")
 public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
 	
-	/*@GetMapping
-	public List<Product> getSellerProducts(@PathVariable Long sellerId){
-		return productService.getUserProducts(sellerId);
-	}*/
-	
 	@GetMapping
+	public List<ProductDto> getProducts(){
+		return productService.getProducts();
+	}
+	
+	@GetMapping("/buy/{productId}")
+	public ProductDto getProduct(@PathVariable Long productId) {
+		return productService.getProduct(productId);
+	}
+	
+	@GetMapping("/{sellerId}")
 	public List<ProductDto> getSellerProducts(@PathVariable Long sellerId){
 		return productService.getUserProducts(sellerId);
 	}
 	
-	@GetMapping("/req")
+	@GetMapping("/{sellerId}/req")
 	public List<ProductDto> getSellerRequiredProducts(@RequestBody List<Long> productIds, @PathVariable Long sellerId){
 		return productService.getUserRequiredProducts(productIds);
 	}
@@ -50,7 +55,7 @@ public class ProductController {
 		return productService.getOneProduct(productId);
 	}*/
 	
-	@GetMapping("/{productId}")
+	@GetMapping("/{sellerId}/{productId}")
 	public ProductDto getSingleProduct(@PathVariable Long productId) {
 		return productService.getOneProduct(productId);
 	}
@@ -60,23 +65,24 @@ public class ProductController {
 		return productService.addProductNew(productDetails,file, sellerId);
 	}*/
 	
-	@PostMapping
+	@PostMapping("/{sellerId}")
 	public Product addProduct(@RequestBody Product product, @PathVariable Long sellerId) throws JsonMappingException, JsonProcessingException {
+		System.out.println(product.getName());
 		return productService.addProduct(product, sellerId);
 	}
 	
-	@PutMapping
+	@PutMapping("/{sellerId}")
 	public Product updateProduct(@RequestBody Product product, @PathVariable Long sellerId) {
 		return productService.addProduct(product, sellerId);
 	}
 	
-	@DeleteMapping("/{productId}")
+	@DeleteMapping("/{sellerId}/{productId}")
 	public ResponseEntity<?> deleteProduct(@PathVariable Long productId){
 		productService.deleteProduct(productId);
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/{productId}/orders")
+	@GetMapping("/{sellerId}/{productId}/orders")
 	public List<ProductOrderDto> getProductOrders(@PathVariable Long productId) {
 		return productService.getProductOrders(productId);
 	}

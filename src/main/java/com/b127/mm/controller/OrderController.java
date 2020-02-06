@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.b127.mm.dto.ManualOrderDto;
+import com.b127.mm.dto.OnlineOrderDto;
 import com.b127.mm.dto.OrderDto;
 import com.b127.mm.dto.TransactionDto;
 import com.b127.mm.entity.Transaction;
@@ -23,7 +25,7 @@ import com.b127.mm.service.TransactionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/api/orders/{sellerId}")
+@RequestMapping(value = "/api/orders")
 public class OrderController {
 	
 	@Autowired
@@ -34,12 +36,12 @@ public class OrderController {
 		return orderService.getSellerOrders(sellerId);
 	}*/
 	
-	@GetMapping
+	@GetMapping("/{sellerId}")
 	public List<ManualOrderDto> getSellerOrders(@PathVariable Long sellerId){
 		return orderService.getSellerOrders(sellerId);
 	}
 	
-	@GetMapping("/{orderId}")
+	@GetMapping("/{orderId}/{sellerId}")
 	public ManualOrderDto getSellerOrder(@PathVariable Long orderId){
 		return orderService.getSellerOrder(orderId);
 	}
@@ -61,16 +63,30 @@ public class OrderController {
 		return transactionService.getTransaction(transactionId);
 	}*/
 	
-	@PostMapping
+	@PostMapping("/{sellerId}")
 	public ManualOrderDto addManualOrder(@RequestBody ManualOrderDto manualOrderDto , @PathVariable Long sellerId) {
 		return orderService.addManualOrder(manualOrderDto, sellerId);
 	}
 	
-	@PutMapping
+	@PutMapping("/{sellerId}")
 	public ManualOrderDto updateManualOrder(@RequestBody ManualOrderDto manualOrderDto , @PathVariable Long sellerId) {
 		return orderService.addManualOrder(manualOrderDto, sellerId);
 	}
 	
+	@PostMapping("buyer/{buyerId}")
+	public OnlineOrderDto addOnlineOrder(@RequestBody OnlineOrderDto onlineOrderDto, @PathVariable Long buyerId) {
+		return orderService.addOnlineOrder(onlineOrderDto, buyerId, "");
+	}
+	
+	@GetMapping("buyer/{buyerId}")
+	public List<OnlineOrderDto> getBuyerOnlineOrders(@PathVariable Long buyerId) {
+		return orderService.getOnlineOrders(buyerId);
+	}
+	
+	@PutMapping("buyer/{buyerId}")
+	public OnlineOrderDto updateOnlineOrder(@RequestBody OnlineOrderDto onlineOrderDto, @PathVariable Long buyerId, @RequestParam("action") String action) {
+		return orderService.addOnlineOrder(onlineOrderDto, buyerId, action);
+	}
 	/*@PostMapping("/{employeeId}")
 	public TransactionDto addTransaction(@RequestBody Transaction transaction, @PathVariable Long employeeId) {
 		return transactionService.addTransaction(transaction, employeeId);

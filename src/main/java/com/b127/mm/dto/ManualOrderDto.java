@@ -19,6 +19,7 @@ public class ManualOrderDto {
 	private boolean buyerConfirmation;
 	private List<ManualOrderProductDto> orderedProducts;
 	private int noOfProducts;
+	private String cancellation;
 
 	public ManualOrderDto() {
 
@@ -26,7 +27,7 @@ public class ManualOrderDto {
 
 	public ManualOrderDto(Long id, LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime,
 			double totalPrice, String currencyType, OrderStatus orderStatus, String orderLocation,
-			boolean sellerConfirmation, boolean buyerConfirmation, List<ManualOrderProductDto> orderedProducts) {
+			boolean sellerConfirmation, boolean buyerConfirmation, List<ManualOrderProductDto> orderedProducts, String cancellation) {
 		super();
 		this.id = id;
 		this.orderExpirationDate = orderExpirationDate;
@@ -39,6 +40,7 @@ public class ManualOrderDto {
 		this.sellerConfirmation = sellerConfirmation;
 		this.buyerConfirmation = buyerConfirmation;
 		this.orderedProducts = orderedProducts;
+		this.cancellation = cancellation;
 	}
 	
 	
@@ -46,7 +48,7 @@ public class ManualOrderDto {
 	public ManualOrderDto(Long id, LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime,
 			double totalPrice, String currencyType, OrderStatus orderStatus, String orderLocation,
 			boolean sellerConfirmation, boolean buyerConfirmation, List<ManualOrderProductDto> orderedProducts,
-			int noOfProducts) {
+			int noOfProducts, String cancellation) {
 		super();
 		this.id = id;
 		this.orderExpirationDate = orderExpirationDate;
@@ -60,6 +62,7 @@ public class ManualOrderDto {
 		this.buyerConfirmation = buyerConfirmation;
 		this.orderedProducts = orderedProducts;
 		this.noOfProducts = noOfProducts;
+		this.cancellation = cancellation;
 	}
 
 	public Long getId() {
@@ -156,6 +159,14 @@ public class ManualOrderDto {
 	
 	public void setNoOfProducts(int noOfProducts) {
 		this.noOfProducts = noOfProducts;
+	}
+	
+	public String getCancellation() {
+		return cancellation;
+	}
+	
+	public void setCancellation(String cancellation) {
+		this.cancellation = cancellation;
 	}
 
 }

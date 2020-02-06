@@ -13,6 +13,8 @@ public class ProductDto {
 	private double unitQuantity;
 	private String siUnit;
 	private Stock stock;
+	private StockDto stockDto;
+	private UserDto userDto;
 
 	public ProductDto() {
 
@@ -29,6 +31,37 @@ public class ProductDto {
 		this.unitQuantity = unitQuantity;
 		this.siUnit = siUnit;
 		this.stock = stock;
+	}
+
+	public ProductDto(Long id, String name, ProductType type, double unitPrice, String currencyType,
+			double unitQuantity, String siUnit, Stock stock, StockDto stockDto) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.unitPrice = unitPrice;
+		this.currencyType = currencyType;
+		this.unitQuantity = unitQuantity;
+		this.siUnit = siUnit;
+		this.stock = stock;
+		this.stockDto = stockDto;
+	}
+	
+	
+
+	public ProductDto(Long id, String name, ProductType type, double unitPrice, String currencyType,
+			double unitQuantity, String siUnit, Stock stock, StockDto stockDto, UserDto userDto) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.unitPrice = unitPrice;
+		this.currencyType = currencyType;
+		this.unitQuantity = unitQuantity;
+		this.siUnit = siUnit;
+		this.stock = stock;
+		this.stockDto = stockDto;
+		this.userDto = userDto;
 	}
 
 	public Long getId() {
@@ -93,6 +126,22 @@ public class ProductDto {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+	}
+	
+	public StockDto getStockDto() {
+		return stockDto;
+	}
+	
+	public void setStockDto(StockDto stockDto) {
+		this.stockDto = stockDto;
+	}
+	
+	public UserDto getUserDto() {
+		return userDto;
+	}
+	
+	public void setUserDto(UserDto userDto) {
+		this.userDto = userDto;
 	}
 
 }

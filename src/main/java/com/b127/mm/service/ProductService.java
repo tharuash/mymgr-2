@@ -27,4 +27,8 @@ public interface ProductService {
 	// throws JsonMappingException, JsonProcessingException;
 	
 	List<ProductOrderDto> getProductOrders(Long productId);
+	
+	List<ProductDto> getProducts();
+	
+	ProductDto getProduct(Long productId);
 }

@@ -1,66 +1,37 @@
-package com.b127.mm.entity;
+package com.b127.mm.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.b127.mm.entity.OrderStatus;
 
-@Entity
-@Table(name = "orders")
-public class Order {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OnlineOrderDto {
 	private Long id;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "seller_id", referencedColumnName = "id")
-	private User seller;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "buyer_id", referencedColumnName = "id")
-	private User buyer;
-
-	@OneToMany(mappedBy = "order")
-	private List<OrderedProducts> orderProducts;
-
-	private double productAmount;
-
 	private LocalDate orderExpirationDate;
 	private LocalDate orderStartDate;
 	private LocalTime orderStartTime;
-
 	private double totalPrice;
 	private String currencyType;
 	private OrderStatus orderStatus;
 	private String orderLocation;
 	private boolean sellerConfirmation;
 	private boolean buyerConfirmation;
+	private ProductDto productDto;
+	private Long orderProductId;
+	private double requiredQuantity;
+	private UserDto userDto;
 	private String cancellation;
+	// private StockDto stockDto;
 
-	public Order() {
+	public OnlineOrderDto() {
 
 	}
 
-	public Order(Long id, User seller, List<OrderedProducts> orderProducts, double productAmount,
-			LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime, double totalPrice,
-			String currencyType, OrderStatus orderStatus, String orderLocation, boolean sellerConfirmation,
-			boolean buyerConfirmation, User buyer, String cancellation) {
+	public OnlineOrderDto(Long id, LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime,
+			double totalPrice, String currencyType, OrderStatus orderStatus, String orderLocation,
+			boolean sellerConfirmation, boolean buyerConfirmation, ProductDto productDto, Long orderProductId, double requiredQuantity, String cancellation) {
 		super();
 		this.id = id;
-		this.seller = seller;
-		this.orderProducts = orderProducts;
-		this.productAmount = productAmount;
 		this.orderExpirationDate = orderExpirationDate;
 		this.orderStartDate = orderStartDate;
 		this.orderStartTime = orderStartTime;
@@ -70,8 +41,34 @@ public class Order {
 		this.orderLocation = orderLocation;
 		this.sellerConfirmation = sellerConfirmation;
 		this.buyerConfirmation = buyerConfirmation;
-		this.buyer = buyer;
+		this.productDto = productDto;
+		this.orderProductId = orderProductId;
+		this.requiredQuantity = requiredQuantity;
 		this.cancellation = cancellation;
+	}
+	
+	
+	public OnlineOrderDto(Long id, LocalDate orderExpirationDate, LocalDate orderStartDate, LocalTime orderStartTime,
+			double totalPrice, String currencyType, OrderStatus orderStatus, String orderLocation,
+			boolean sellerConfirmation, boolean buyerConfirmation, ProductDto productDto, Long orderProductId,
+			double requiredQuantity, UserDto userDto, String cancellation) {
+		super();
+		this.id = id;
+		this.orderExpirationDate = orderExpirationDate;
+		this.orderStartDate = orderStartDate;
+		this.orderStartTime = orderStartTime;
+		this.totalPrice = totalPrice;
+		this.currencyType = currencyType;
+		this.orderStatus = orderStatus;
+		this.orderLocation = orderLocation;
+		this.sellerConfirmation = sellerConfirmation;
+		this.buyerConfirmation = buyerConfirmation;
+		this.productDto = productDto;
+		this.orderProductId = orderProductId;
+		this.requiredQuantity = requiredQuantity;
+		this.userDto = userDto;
+		this.cancellation = cancellation;
+		
 	}
 
 	public Long getId() {
@@ -80,22 +77,6 @@ public class Order {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public User getSeller() {
-		return seller;
-	}
-
-	public void setSeller(User seller) {
-		this.seller = seller;
-	}
-
-	public double getProductAmount() {
-		return productAmount;
-	}
-
-	public void setProductAmount(double productAmount) {
-		this.productAmount = productAmount;
 	}
 
 	public LocalDate getOrderExpirationDate() {
@@ -154,15 +135,7 @@ public class Order {
 		this.orderLocation = orderLocation;
 	}
 
-	public void setOrderProducts(List<OrderedProducts> orderProducts) {
-		this.orderProducts = orderProducts;
-	}
-
-	public List<OrderedProducts> getOrderProducts() {
-		return orderProducts;
-	}
-
-	public boolean getSellerConfirmation() {
+	public boolean isSellerConfirmation() {
 		return sellerConfirmation;
 	}
 
@@ -170,7 +143,7 @@ public class Order {
 		this.sellerConfirmation = sellerConfirmation;
 	}
 
-	public boolean getBuyerConfirmation() {
+	public boolean isBuyerConfirmation() {
 		return buyerConfirmation;
 	}
 
@@ -178,12 +151,36 @@ public class Order {
 		this.buyerConfirmation = buyerConfirmation;
 	}
 
-	public User getBuyer() {
-		return buyer;
+	public ProductDto getProductDto() {
+		return productDto;
 	}
 
-	public void setBuyer(User buyer) {
-		this.buyer = buyer;
+	public void setProductDto(ProductDto productDto) {
+		this.productDto = productDto;
+	}
+	
+	public Long getOrderProductId() {
+		return orderProductId;
+	}
+	
+	public void setOrderProductId(Long orderProductId) {
+		this.orderProductId = orderProductId;
+	}
+	
+	public double getRequiredQuantity() {
+		return requiredQuantity;
+	}
+	
+	public void setRequiredQuantity(double requiredQuantity) {
+		this.requiredQuantity = requiredQuantity;
+	}
+	
+	public UserDto getUserDto() {
+		return userDto;
+	}
+	
+	public void setUserDto(UserDto userDto) {
+		this.userDto = userDto;
 	}
 	
 	public String getCancellation() {
